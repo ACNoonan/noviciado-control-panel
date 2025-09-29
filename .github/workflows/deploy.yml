@@ -42,12 +42,11 @@ jobs:
             echo "Deploying WAHA service..."
             cd waha-service
             # Write .env with security settings
-            cat > .env <<EOF
-WAHA_API_KEY=${WAHA_API_KEY_HASH}
-WAHA_DASHBOARD_ENABLED=true
-WAHA_DASHBOARD_USERNAME=${WAHA_DASHBOARD_USERNAME}
-WAHA_DASHBOARD_PASSWORD=${WAHA_DASHBOARD_PASSWORD}
-EOF
+            : > .env
+            echo "WAHA_API_KEY=${WAHA_API_KEY_HASH}" >> .env
+            echo "WAHA_DASHBOARD_ENABLED=true" >> .env
+            echo "WAHA_DASHBOARD_USERNAME=${WAHA_DASHBOARD_USERNAME}" >> .env
+            echo "WAHA_DASHBOARD_PASSWORD=${WAHA_DASHBOARD_PASSWORD}" >> .env
             sudo docker compose up -d --build
             
             echo "Deploying attendance tracker service..."
