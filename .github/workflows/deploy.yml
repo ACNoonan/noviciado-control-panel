@@ -18,10 +18,16 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
+          password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd ~/noviciado-control-panel
             git pull origin master
+            
+            echo "Deploying WAHA service..."
             cd waha-service
-            docker-compose up -d --build
+            docker compose up -d --build
+            
+            echo "Deploying attendance tracker service..."
+            cd ../attendance-tracker
+            docker compose up -d --build
