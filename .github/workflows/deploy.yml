@@ -15,7 +15,12 @@ jobs:
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
+        env:
+          WAHA_API_KEY_HASH: ${{ secrets.WAHA_API_KEY_HASH }}
+          WAHA_DASHBOARD_USERNAME: ${{ secrets.WAHA_DASHBOARD_USERNAME }}
+          WAHA_DASHBOARD_PASSWORD: ${{ secrets.WAHA_DASHBOARD_PASSWORD }}
         with:
+          envs: WAHA_API_KEY_HASH,WAHA_DASHBOARD_USERNAME,WAHA_DASHBOARD_PASSWORD
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
@@ -36,6 +41,13 @@ jobs:
             
             echo "Deploying WAHA service..."
             cd waha-service
+            # Write .env with security settings
+            cat > .env << 'EOF'
+WAHA_API_KEY=${WAHA_API_KEY_HASH}
+WAHA_DASHBOARD_ENABLED=true
+WAHA_DASHBOARD_USERNAME=${WAHA_DASHBOARD_USERNAME}
+WAHA_DASHBOARD_PASSWORD=${WAHA_DASHBOARD_PASSWORD}
+EOF
             sudo docker compose up -d --build
             
             echo "Deploying attendance tracker service..."
