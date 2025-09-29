@@ -42,7 +42,7 @@ jobs:
             echo "Deploying WAHA service..."
             cd waha-service
             # Write .env with security settings
-            cat > .env << 'EOF'
+            cat > .env <<EOF
 WAHA_API_KEY=${WAHA_API_KEY_HASH}
 WAHA_DASHBOARD_ENABLED=true
 WAHA_DASHBOARD_USERNAME=${WAHA_DASHBOARD_USERNAME}
