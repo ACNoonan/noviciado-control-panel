@@ -21,8 +21,18 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd ~/noviciado-control-panel
-            git pull origin master
+            REPO_URL="https://github.com/ACNoonan/noviciado-control-panel.git"
+            PROJECT_DIR="~/noviciado-control-panel"
+            
+            if [ -d "$PROJECT_DIR" ]; then
+              echo "Repository exists, pulling latest changes..."
+              cd $PROJECT_DIR
+              git pull origin master
+            else
+              echo "Repository not found, cloning..."
+              git clone $REPO_URL $PROJECT_DIR
+              cd $PROJECT_DIR
+            fi
             
             echo "Deploying WAHA service..."
             cd waha-service
