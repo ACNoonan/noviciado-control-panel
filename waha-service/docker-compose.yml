@@ -4,7 +4,7 @@ services:
     container_name: waha
     restart: always
     ports:
-      - "3000:3000"
+      - "192.168.1.108:3000:3000"
     environment:
       LOG_LEVEL: info
       LOG_FORMAT: json
