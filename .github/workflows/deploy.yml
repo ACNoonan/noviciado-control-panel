@@ -22,22 +22,22 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             REPO_URL="https://github.com/ACNoonan/noviciado-control-panel.git"
-            PROJECT_DIR="~/noviciado-control-panel"
+            PROJECT_DIR="$HOME/noviciado-control-panel"
             
             if [ -d "$PROJECT_DIR" ]; then
               echo "Repository exists, pulling latest changes..."
-              cd $PROJECT_DIR
+              cd "$PROJECT_DIR"
               git pull origin master
             else
               echo "Repository not found, cloning..."
-              git clone $REPO_URL $PROJECT_DIR
-              cd $PROJECT_DIR
+              git clone "$REPO_URL" "$PROJECT_DIR"
+              cd "$PROJECT_DIR"
             fi
             
             echo "Deploying WAHA service..."
             cd waha-service
-            docker compose up -d --build
+            sudo docker compose up -d --build
             
             echo "Deploying attendance tracker service..."
             cd ../attendance-tracker
-            docker compose up -d --build
+            sudo docker compose up -d --build
