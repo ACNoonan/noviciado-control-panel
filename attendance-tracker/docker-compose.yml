@@ -7,3 +7,19 @@ services:
       - "192.168.1.108:8000:8000"
     volumes:
       - .:/app
+      - attendance-data:/app/data
+    command: uvicorn app:app --host 0.0.0.0 --port 8000
+  
+  dashboard:
+    build: .
+    container_name: attendance-dashboard
+    restart: always
+    ports:
+      - "192.168.1.108:8501:8501"
+    volumes:
+      - .:/app
+      - attendance-data:/app/data
+    command: streamlit run dashboard.py --server.port 8501 --server.address 0.0.0.0
+
+volumes:
+  attendance-data:
