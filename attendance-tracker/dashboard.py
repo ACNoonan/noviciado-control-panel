@@ -7,8 +7,28 @@ from datetime import datetime, timedelta
 st.set_page_config(
     page_title="Noviciado Attendance",
     page_icon="📊",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded",
+    menu_items=None
 )
+
+# Force light theme
+st.markdown("""
+<style>
+    [data-testid="stAppViewContainer"] {
+        background-color: white;
+    }
+    [data-testid="stHeader"] {
+        background-color: white;
+    }
+    [data-testid="stToolbar"] {
+        background-color: white;
+    }
+    .stApp {
+        background-color: white;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 DB_PATH = Path("/app/data/attendance.db")
 
